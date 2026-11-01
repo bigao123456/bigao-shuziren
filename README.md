@@ -35,7 +35,7 @@
 
 ![同一套人物切片和音轨，组合成六种剪辑风格](assets/showcase.gif)
 
-同一套人物切片和音轨，组合成六种剪辑风格。上图为现有成片节选；[查看完整混剪演示](https://github.com/cclank/lanshu-infinite-stream-koubo/releases/tag/v1.3.1)。
+同一套人物切片和音轨，组合成六种剪辑风格。上图为现有成片节选。
 
 ## 核心流程
 
