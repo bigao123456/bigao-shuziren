@@ -104,7 +104,7 @@ bash tools/run_demo.sh
 
 可以参考下面这些独立 Skill 的分镜、版式和动效，再接上同一套人物切片与音轨：
 
-- **`talking-head-editor` · Renoise**：口播精剪、字幕花字、画中画。
+- **`talking-head-editor` · Renoise**：口播精剪、字幕花字、画中画。 [安装 Renoise](https://renoise.ai/mcp?utm_source=lufzzliz-aini-202610&utm_medium=xcom)
 - **[`lanshu-create-ai-presenter-video`](https://github.com/cclank/lanshu-create-ai-presenter-video) · cclank**：纸艺立体书等讲解风格。
 - **[`digital-human-koubo`](https://github.com/andyhuo520/digital-human-koubo) · andyhuo520**：发布解读、粒子文字、文档聚焦。
 
