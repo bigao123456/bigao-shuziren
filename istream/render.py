@@ -28,6 +28,8 @@ _FONT_CANDIDATES = (
     "/System/Library/Fonts/PingFang.ttc",
     "/System/Library/Fonts/STHeiti Medium.ttc",
     "/System/Library/Fonts/Supplemental/Songti.ttc",
+    os.path.join(os.environ.get("WINDIR", "C:/Windows"), "Fonts", "msyh.ttc"),
+    os.path.join(os.environ.get("WINDIR", "C:/Windows"), "Fonts", "simhei.ttf"),
 )
 FONT = next((f for f in _FONT_CANDIDATES if f and os.path.isfile(f)), None)
 NAVY, CYAN, WHITE, AMBER = "0x0C1424", "0x5FD4FF", "0xEAF4FF", "0xE8A86A"
@@ -374,6 +376,7 @@ class Renderer:
         return path
 
     def stage_composite(self, jobs, out_path, captions=True, mg=True, fade_frames=6, grain=0):
+        os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
         host = self.tl["host"]
         jobmap = {cid: j for j in jobs["jobs"] for cid in j["clips"]}
         tasks = []
