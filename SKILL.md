@@ -1,5 +1,5 @@
 ---
-name: lanshu-infinite-stream-koubo
+name: bigao-shuziren
 description: >-
   高级无限流 / Advanced Infinite Stream — 数字人口播（talking-head）生产技能：底板只生成一次，切成带标签的镜头单元，
   按脚本像写代码一样装配（换镜头、推近、画中画、隐藏、重排、MG 动效），只把主播可见的片段送去口型模型（中文口型一等公民），
@@ -10,7 +10,9 @@ description: >-
   Not for full-body acting, multi-person scenes, product handling or strong emotion — route those to full generation or live shooting.
 ---
 
-# 岚叔无限流 · Lanshu Infinite Stream Koubo
+# 比高数字人 · bigao-shuziren
+
+基于 [cclank/lanshu-infinite-stream-koubo](https://github.com/cclank/lanshu-infinite-stream-koubo) 的 MIT 开源改进版，原作者为岚叔。比高版入门见 [docs/QUICKSTART.md](docs/QUICKSTART.md)；新增 `python -m bigao_shuziren doctor --render` 与品牌命令入口，原 `istream` 命令保持兼容。
 
 **一句话：** 主播的“表演”只买一次，之后每条视频只花“嘴”和“剪”的钱；剪辑由脚本驱动、像代码一样可改、每一步都有标签和 QC 兜底。
 
