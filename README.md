@@ -34,10 +34,12 @@
 ## 效果演示
 
 <p align="center">
-  <img src="assets/showcase.gif" alt="同一套人物切片和音轨，组合成六种剪辑风格" width="100%">
+  <a href="recipes/demo60/out/demo60_preview_169.mp4"><img src="docs/demo60_169_sheet.jpg" alt="内置口播预览：镜头、字幕、图解与画中画的关键帧" width="100%"></a>
 </p>
 
-<p align="center"><sub>同一套人物切片与音轨，可以组合不同的版式和剪辑包装。更多示例与复现说明见 <a href="DEMO.md">制作演示</a>。</sub></p>
+<p align="center"><a href="recipes/demo60/out/demo60_preview_169.mp4">播放横版预览</a> · <a href="recipes/demo60/out/916/demo60_preview_916.mp4">播放竖版预览</a> · <a href="DEMO.md">更多演示与复现说明</a></p>
+
+<sub>上图为仓库内置预览的关键帧，展示镜头、字幕、图解和画中画编排；预览不代表已接入真实口型服务。</sub>
 
 ## 从母片到成片
 
