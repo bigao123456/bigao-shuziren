@@ -42,8 +42,18 @@ class Shot(dict):
 class Catalog:
     def __init__(self, plates, shots, root):
         self.root = root
-        self.plates = {p["id"]: p for p in plates}
-        self.shots = {s["id"]: Shot(s) for s in shots}
+        self.plates = self._index(plates, "plate")
+        self.shots = {sid: Shot(s) for sid, s in self._index(shots, "shot").items()}
+
+    @staticmethod
+    def _index(records, kind):
+        result = {}
+        for record in records:
+            key = record["id"]
+            if key in result:
+                raise ValueError(f"duplicate {kind} id: {key}; rename conflicting assets before merging catalogs")
+            result[key] = record
+        return result
 
     @classmethod
     def load(cls, plates_path, shots_path=None):
