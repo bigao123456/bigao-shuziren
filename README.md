@@ -1,31 +1,30 @@
-<p align="center">
-  <img src="assets/cover-21x9.png" alt="岚叔无限流数字人口播：一套数字人，无限出片" width="100%">
-</p>
+<h1 align="center">bigao-shuziren · 比高数字人</h1>
 
-<h1 align="center">lanshu-infinite-stream-koubo</h1>
+<p align="center"><strong>一套母片，持续出片。可复用素材驱动的数字人口播工作流。</strong></p>
 
 <p align="center">
-  <strong>岚叔 · 无限流数字人口播</strong><br>
-  母片先做好，切片反复用。换文案、换镜头、换风格，持续出片。
+  <a href="https://github.com/bigao123456/bigao-shuziren/actions/workflows/test.yml"><img src="https://github.com/bigao123456/bigao-shuziren/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python 3.10+">
+  <a href="https://github.com/bigao123456/bigao-shuziren/stargazers"><img src="https://img.shields.io/github/stars/bigao123456/bigao-shuziren?style=social" alt="GitHub stars"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/cclank/lanshu-infinite-stream-koubo/actions/workflows/test.yml"><img src="https://github.com/cclank/lanshu-infinite-stream-koubo/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22C55E?style=flat-square" alt="MIT License"></a>
-  <a href="SKILL.md"><img src="https://img.shields.io/badge/Agent-Skill-111827?style=flat-square" alt="Agent Skill"></a>
-  <a href="#快速开始"><img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+"></a>
-  <a href="#快速开始"><img src="https://img.shields.io/badge/FFmpeg-7%2B-007808?style=flat-square&logo=ffmpeg&logoColor=white" alt="FFmpeg 7+"></a>
-  <a href="#核心流程"><img src="https://img.shields.io/badge/Timeline-Audio_Locked-0F766E?style=flat-square" alt="Audio-locked timeline"></a>
-</p>
-<p align="center">
-  <a href="#怎么省成本"><img src="https://img.shields.io/badge/Footage-Reusable-0D9488?style=flat-square" alt="Reusable footage"></a>
-  <a href="#核心流程"><img src="https://img.shields.io/badge/Lip--sync-Visible_Only-7C3AED?style=flat-square" alt="Lip-sync visible segments only"></a>
-  <a href="SKILL.md"><img src="https://img.shields.io/badge/Output-16%3A9_%7C_9%3A16-0284C7?style=flat-square" alt="16:9 and 9:16"></a>
-  <a href="SKILL.md"><img src="https://img.shields.io/badge/Quality-QC_Workflow-475569?style=flat-square" alt="Quality-control workflow"></a>
-</p>
-<p align="center">
-  <a href="https://x.com/LufzzLiz"><img src="https://img.shields.io/badge/X-%E5%B2%9A%E5%8F%94_%40LufzzLiz-111111?style=for-the-badge&logo=x&logoColor=white" alt="在 X 上关注岚叔 @LufzzLiz"></a>
-</p>
+由比高维护的改进版，基于 [岚叔 / cclank 的 lanshu-infinite-stream-koubo](https://github.com/cclank/lanshu-infinite-stream-koubo)。保留上游作者署名、MIT 许可证和原始制作资料，改进记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+**适合谁：** 希望复用人物母片、按文案装配镜头、制作知识讲解或产品口播的创作者，以及使用 Agent 的开发者。
+
+**开始使用：** [中文入门与排错](docs/QUICKSTART.md) · [完整技能说明](SKILL.md) · [项目结构](docs/PROJECT_GUIDE.md) · [上游演示](DEMO.md)
+
+> 这是素材管理、脚本规划、口型任务编排和 FFmpeg 合成工具。真实人物视频、配音和口型模型需自行准备或接入；仓库不附带 Qwen、Duix 或其他模型权重，也未内置这些服务。`passthrough` 与占位动画用于验证剪辑流程，不会生成真实嘴型。
+
+## 比高版优化
+
+- **运行前可诊断：** `doctor --render --json` 检查 Python、FFmpeg、滤镜、编码器和中文字体；切片依赖可单独检查。
+- **失败不冒充成功：** 未接入的口型引擎返回非零退出码，停止后续合成；真实引擎合成前检查结果文件。
+- **素材合并更可靠：** 重复母片或镜头编号明确报错，避免悄悄覆盖已有素材。
+- **任务更准确：** 可见片段之间的时间空隙单独断开；口型规划复用镜头索引，减少重复构建。
+- **参数与输出更友好：** 检查无效缩放、并发数和成本参数，自动创建导出目录，补充 Windows 中文字体路径。
+- **便于分享使用：** 统一品牌入口、中文入门、项目导览与贡献说明；兼容原有 `python -m istream` 命令。
 
 ## 无限流怎么玩
 
@@ -33,9 +32,9 @@
 
 适合课程、知识讲解、产品介绍等口播内容。素材库可以持续补新，镜头按使用情况轮换。
 
-![同一套人物切片和音轨，组合成六种剪辑风格](assets/showcase.gif)
+![上游演示：同一套人物切片和音轨，组合成六种剪辑风格](assets/showcase.gif)
 
-同一套人物切片和音轨，组合成六种剪辑风格。上图为现有成片节选。
+上图为上游项目提供的成片节选，展示同一套人物切片与音轨的多种包装方式。
 
 ## 核心流程
 
@@ -58,10 +57,10 @@
 
 ## 快速开始
 
-将本目录放进 Agent 的技能目录，例如项目下的 `.agents/skills/lanshu-infinite-stream-koubo/`，加载 [`SKILL.md`](SKILL.md)。提供人物参考图或已有切片库、文案和声音要求，即可让 Agent 按流程制作：
+将本目录放进 Agent 的技能目录，例如项目下的 `.agents/skills/bigao-shuziren/`，加载 [`SKILL.md`](SKILL.md)。提供人物参考图或已有切片库、文案和声音要求，即可让 Agent 按流程制作：
 
 ```text
-使用 lanshu-infinite-stream-koubo。
+使用 bigao-shuziren。
 优先复用我的人物切片，以确认后的配音锁定时间轴。
 只对需要出镜说话的片段做口型。
 制作一条 16:9 口播，人物主讲、圆形小窗与全屏图解交替。
@@ -71,14 +70,14 @@
 本地命令入口：
 
 ```bash
-git clone https://github.com/cclank/lanshu-infinite-stream-koubo.git
-cd lanshu-infinite-stream-koubo
+git clone https://github.com/bigao123456/bigao-shuziren.git
+cd bigao-shuziren
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python tools/check_environment.py
-python -m istream --help
-python -m istream prompts build
+python -m bigao_shuziren doctor
+python -m bigao_shuziren --help
+python -m bigao_shuziren prompts verify
 ```
 
 核心规划模块使用 Python 3.10+；切片需要 NumPy。合成推荐 FFmpeg 7+，须包含 `drawtext`、`subtitles`、`libx264` 和中文字体。macOS 可安装完整版：
@@ -86,7 +85,7 @@ python -m istream prompts build
 ```bash
 brew install ffmpeg-full
 export PATH="$(brew --prefix ffmpeg-full)/bin:$PATH"
-python tools/check_environment.py --render
+python -m bigao_shuziren doctor --render
 ```
 
 视频、配音与真实口型服务需自行接入；包内口型适配器以模板为主，`passthrough` 用于预览，不会修改嘴型。以上环境检查和示例渲染均不调用生成模型。
@@ -112,6 +111,8 @@ bash tools/run_demo.sh
 
 | 文档 | 内容 |
 | --- | --- |
+| [`docs/QUICKSTART.md`](docs/QUICKSTART.md) | 从下载到示例规划、渲染与常见问题 |
+| [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md) | 模块结构、输入输出与兼容说明 |
 | [`SKILL.md`](SKILL.md) | 完整流程、命令、剪辑规则与口型处理 |
 | [`prompts/GENERATE_PACK.md`](prompts/GENERATE_PACK.md) | 参考图与母片生成提示词 |
 | [`schema/TAGS.md`](schema/TAGS.md) | 切片标签与素材契约 |
@@ -124,4 +125,6 @@ bash tools/run_demo.sh
 
 ---
 
-由 **岚叔（Lanshu）** 整理与维护。[在 X 上关注 @LufzzLiz →](https://x.com/LufzzLiz)
+**比高版维护：** [bigao123456](https://github.com/bigao123456)。原项目由 **岚叔（Lanshu / cclank）** 整理与维护，[原作者 X](https://x.com/LufzzLiz)。详见 [NOTICE.md](NOTICE.md)。
+
+如果这个项目对你有帮助，欢迎点击仓库右上角 **Star ⭐** 收藏，也欢迎提交 Issue 或改进建议。分享地址：https://github.com/bigao123456/bigao-shuziren
