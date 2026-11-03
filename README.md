@@ -9,11 +9,11 @@
   <a href="https://github.com/bigao123456/bigao-shuziren/stargazers"><img src="https://img.shields.io/github/stars/bigao123456/bigao-shuziren?style=social" alt="GitHub stars"></a>
 </p>
 
-由比高维护的改进版，基于 [岚叔 / cclank 的 lanshu-infinite-stream-koubo](https://github.com/cclank/lanshu-infinite-stream-koubo)。保留上游作者署名、MIT 许可证和原始制作资料，改进记录见 [CHANGELOG.md](CHANGELOG.md)。
+由比高维护的数字人口播工具，改进记录见 [CHANGELOG.md](CHANGELOG.md)，开源许可见 [LICENSE](LICENSE)。
 
 **适合谁：** 希望复用人物母片、按文案装配镜头、制作知识讲解或产品口播的创作者，以及使用 Agent 的开发者。
 
-**开始使用：** [中文入门与排错](docs/QUICKSTART.md) · [完整技能说明](SKILL.md) · [项目结构](docs/PROJECT_GUIDE.md) · [上游演示](DEMO.md)
+**开始使用：** [中文入门与排错](docs/QUICKSTART.md) · [完整技能说明](SKILL.md) · [项目结构](docs/PROJECT_GUIDE.md) · [制作演示](DEMO.md)
 
 > 这是素材管理、脚本规划、口型任务编排和 FFmpeg 合成工具。真实人物视频、配音和口型模型需自行准备或接入；仓库不附带 Qwen、Duix 或其他模型权重，也未内置这些服务。`passthrough` 与占位动画用于验证剪辑流程，不会生成真实嘴型。
 
@@ -32,9 +32,9 @@
 
 适合课程、知识讲解、产品介绍等口播内容。素材库可以持续补新，镜头按使用情况轮换。
 
-![上游演示：同一套人物切片和音轨，组合成六种剪辑风格](assets/showcase.gif)
+![制作演示：同一套人物切片和音轨，组合成六种剪辑风格](assets/showcase.gif)
 
-上图为上游项目提供的成片节选，展示同一套人物切片与音轨的多种包装方式。
+上图展示同一套人物切片与音轨的多种包装方式。
 
 ## 核心流程
 
@@ -104,7 +104,6 @@ bash tools/run_demo.sh
 可以参考下面这些独立 Skill 的分镜、版式和动效，再接上同一套人物切片与音轨：
 
 - **`talking-head-editor` · Renoise**：口播精剪、字幕花字、画中画。 [安装 Renoise](https://renoise.ai/mcp?utm_source=lufzzliz-aini-202610&utm_medium=xcom)
-- **[`lanshu-create-ai-presenter-video`](https://github.com/cclank/lanshu-create-ai-presenter-video) · cclank**：纸艺立体书等讲解风格。
 - **[`digital-human-koubo`](https://github.com/andyhuo520/digital-human-koubo) · andyhuo520**：发布解读、粒子文字、文档聚焦。
 
 ## 详细文档
@@ -125,6 +124,6 @@ bash tools/run_demo.sh
 
 ---
 
-**比高版维护：** [bigao123456](https://github.com/bigao123456)。原项目由 **岚叔（Lanshu / cclank）** 整理与维护，[原作者 X](https://x.com/LufzzLiz)。详见 [NOTICE.md](NOTICE.md)。
+**项目维护：** [bigao123456](https://github.com/bigao123456)。开源许可说明见 [NOTICE.md](NOTICE.md)。
 
 如果这个项目对你有帮助，欢迎点击仓库右上角 **Star ⭐** 收藏，也欢迎提交 Issue 或改进建议。分享地址：https://github.com/bigao123456/bigao-shuziren
