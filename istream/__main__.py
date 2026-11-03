@@ -17,9 +17,15 @@
 import argparse
 import glob
 import json
+import math
+import ntpath
 import os
 import sys
 
+if sys.version_info < (3, 10):
+    raise SystemExit("bigao-shuziren requires Python 3.10+; use python3.12 or a newer Python interpreter.")
+
+from . import __version__
 from . import catalog as catm
 from . import cost as costm
 from . import lipsync as lsm
@@ -37,7 +43,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def _cat(paths):
     pairs = []
     for p in paths:
-        if ":" in p and not os.path.exists(p):
+        if "::" in p:
+            a, b = p.split("::", 1)
+        elif ":" in p and not ntpath.splitdrive(p)[0] and not os.path.exists(p):
             a, b = p.split(":", 1)
         else:
             a, b = p, os.path.join(os.path.dirname(p), "shots.json")
@@ -245,9 +253,9 @@ def cmd_qc(a):
 
 def cmd_lipsync(a):
     cat = _cat(a.cat)
-    with open(a.timeline, encoding="utf-8") as f:
-        tl = json.load(f)
     if a.action == "plan":
+        with open(a.timeline, encoding="utf-8") as f:
+            tl = json.load(f)
         policy = None
         if a.policy:
             with open(a.policy, encoding="utf-8") as f:
@@ -258,12 +266,16 @@ def cmd_lipsync(a):
     else:
         with open(a.jobs, encoding="utf-8") as f:
             jobs = json.load(f)
+        failed = []
         for j in jobs["jobs"]:
             try:
                 r = lsm.run_job(j, a.workdir, a.engine)
                 print(j["id"], "→", r["output"], "(UNSYNCED passthrough)" if not r["synced"] else "")
             except lsm.NotConfigured as e:
                 print(j["id"], "NOT RUN:", e)
+                failed.append(j["id"])
+        if failed:
+            raise lsm.NotConfigured(f"{len(failed)} lip-sync jobs were NOT run; configure an adapter or use --engine passthrough for preview")
 
 
 def cmd_render(a):
@@ -279,12 +291,14 @@ def cmd_render(a):
         print("stage A: lip-sync inputs →", os.path.join(a.workdir, "lipsync/in"))
     if a.stage == "all":
         for j in jobs["jobs"]:
-            try:
-                lsm.run_job(j, a.workdir, a.engine)
-            except lsm.NotConfigured as e:
-                print(j["id"], "NOT RUN:", e)
+            lsm.run_job(j, a.workdir, a.engine)
         print(f"stage B: lip-sync via '{a.engine}'" + (" — UNSYNCED preview (mouths not corrected)" if a.engine == "passthrough" else ""))
     if a.stage in ("all", "composite"):
+        if a.engine != "passthrough":
+            for job in jobs["jobs"]:
+                output = lsm.resolve_job_path(a.workdir, job["output"])
+                if not os.path.isfile(output) or os.path.getsize(output) == 0:
+                    raise ValueError(f"missing lip-sync result for {job['id']}: {output}; use --engine passthrough only for preview")
         r.stage_composite(jobs, a.out, captions=not a.no_captions, mg=not a.no_mg, grain=a.grain)
         print("stage C: composite →", a.out)
 
@@ -342,9 +356,40 @@ def cmd_identity(a):
 
 
 
+def _positive_float(value):
+    number = float(value)
+    if not math.isfinite(number) or number <= 0:
+        raise argparse.ArgumentTypeError("must be a finite positive number")
+    return number
+
+
+def _positive_int(value):
+    number = int(value)
+    if number <= 0:
+        raise argparse.ArgumentTypeError("must be a positive integer")
+    return number
+
+
+def _size(value):
+    try:
+        width, height = value.split("x")
+        _positive_int(width)
+        _positive_int(height)
+    except (ValueError, argparse.ArgumentTypeError):
+        raise argparse.ArgumentTypeError("size must be WIDTHxHEIGHT, e.g. 1280x720") from None
+    return value
+
+
 def main(argv=None):
-    ap = argparse.ArgumentParser(prog="istream", description="高级无限流 · Advanced Infinite Stream toolkit")
+    ap = argparse.ArgumentParser(prog="bigao-shuziren", description="比高数字人 · 可复用素材驱动的数字人口播工具（兼容 istream）")
+    ap.add_argument("--version", action="version", version=f"bigao-shuziren {__version__}")
     sp = ap.add_subparsers(dest="cmd", required=True)
+    s = sp.add_parser("doctor", help="check Python, optional slicing dependencies and render capabilities")
+    s.add_argument("--render", action="store_true")
+    s.add_argument("--slicing", action="store_true")
+    s.add_argument("--json", action="store_true", dest="as_json")
+    from .environment import command as doctor_command
+    s.set_defaults(fn=doctor_command)
     s = sp.add_parser("schema")
     s.add_argument("--write", action="store_true")
     s.set_defaults(fn=cmd_schema)
@@ -403,10 +448,10 @@ def main(argv=None):
     s.add_argument("--aspect")
     s.add_argument("--profile", default="auto", choices=["auto", "short", "long"])
     s.add_argument("--seed", type=int, default=7)
-    s.add_argument("--rate", type=float, default=5.0, help="estimated Mandarin chars/s when no alignment is given")
+    s.add_argument("--rate", type=_positive_float, default=5.0, help="estimated Mandarin chars/s when no alignment is given")
     s.add_argument("--ledger")
     s.add_argument("--mg-library")
-    s.add_argument("--size")
+    s.add_argument("--size", type=_size)
     s.add_argument("--no-auto-mg", action="store_true")
     s.add_argument("--out", required=True)
     s.set_defaults(fn=cmd_plan)
@@ -428,7 +473,7 @@ def main(argv=None):
     s.add_argument("timeline")
     s.add_argument("--cat", action="append", required=True)
     s.add_argument("--policy")
-    s.add_argument("--engine")
+    s.add_argument("--engine", choices=sorted(lsm.ENGINES))
     s.add_argument("--jobs")
     s.add_argument("--workdir", default="build")
     s.add_argument("--out")
@@ -439,20 +484,20 @@ def main(argv=None):
     s.add_argument("--jobs", required=True)
     s.add_argument("--workdir", default="build")
     s.add_argument("--out", required=True)
-    s.add_argument("--scale", type=float, default=1.0)
+    s.add_argument("--scale", type=_positive_float, default=1.0)
     s.add_argument("--stage", default="all", choices=["all", "inputs", "composite"])
-    s.add_argument("--engine", default="passthrough")
-    s.add_argument("--workers", type=int, default=4)
-    s.add_argument("--crf", type=int, default=20)
+    s.add_argument("--engine", choices=sorted(lsm.ENGINES), default="passthrough")
+    s.add_argument("--workers", type=_positive_int, default=4)
+    s.add_argument("--crf", type=int, choices=range(52), default=20, metavar="0..51")
     s.add_argument("--no-captions", action="store_true")
     s.add_argument("--no-mg", action="store_true")
-    s.add_argument("--grain", type=int, default=0, help="uniform fine grain on the host layer after lip-sync (2–4 recommended; 0 = off)")
+    s.add_argument("--grain", type=int, choices=range(101), default=0, metavar="0..100", help="uniform fine grain on the host layer after lip-sync (2–4 recommended; 0 = off)")
     s.set_defaults(fn=cmd_render)
     s = sp.add_parser("cost")
     s.add_argument("timeline")
     s.add_argument("--cat", action="append", required=True)
     s.add_argument("--jobs", required=True)
-    s.add_argument("--lifetime", type=float, default=300.0, help="finished minutes the plate library will serve")
+    s.add_argument("--lifetime", type=_positive_float, default=300.0, help="finished minutes the plate library will serve")
     s.add_argument("--out")
     s.set_defaults(fn=cmd_cost)
     s = sp.add_parser("ledger")
@@ -462,7 +507,19 @@ def main(argv=None):
     s.add_argument("--retire-at", type=int, default=40)
     s.set_defaults(fn=cmd_ledger)
     a = ap.parse_args(argv)
-    a.fn(a)
+    if a.cmd == "catalog":
+        if a.action == "build-spec" and not a.out:
+            ap.error("catalog build-spec requires --out DIRECTORY")
+        if a.action == "merge-review" and (not a.draft or not a.review or not a.out):
+            ap.error("catalog merge-review requires --draft, --review and --out")
+        if a.action in ("stats", "validate") and not a.cat:
+            ap.error(f"catalog {a.action} requires --cat PLATES.json")
+    if a.cmd == "lipsync" and not (a.out if a.action == "plan" else a.jobs):
+        ap.error("lipsync plan requires --out; lipsync run requires --jobs")
+    try:
+        a.fn(a)
+    except (OSError, ValueError, lsm.NotConfigured) as exc:
+        ap.exit(2, f"error: {exc}\n")
 
 
 if __name__ == "__main__":
