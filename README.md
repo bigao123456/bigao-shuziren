@@ -1,129 +1,125 @@
-<h1 align="center">bigao-shuziren · 比高数字人</h1>
-
-<p align="center"><strong>一套母片，持续出片。可复用素材驱动的数字人口播工作流。</strong></p>
-
 <p align="center">
-  <a href="https://github.com/bigao123456/bigao-shuziren/actions/workflows/test.yml"><img src="https://github.com/bigao123456/bigao-shuziren/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python 3.10+">
-  <a href="https://github.com/bigao123456/bigao-shuziren/stargazers"><img src="https://img.shields.io/github/stars/bigao123456/bigao-shuziren?style=social" alt="GitHub stars"></a>
+  <img src="assets/bigao-banner.svg" alt="比高数字人：一套母片，持续出片" width="100%">
 </p>
 
-由比高维护的数字人口播工具，改进记录见 [CHANGELOG.md](CHANGELOG.md)，开源许可见 [LICENSE](LICENSE)。
+<p align="center">
+  <strong>可复用素材驱动的数字人口播工作流</strong><br>
+  准备一次人物母片，围绕新文案持续装配、剪辑与导出。
+</p>
 
-**适合谁：** 希望复用人物母片、按文案装配镜头、制作知识讲解或产品口播的创作者，以及使用 Agent 的开发者。
+<p align="center">
+  <a href="docs/QUICKSTART.md"><strong>开始使用</strong></a> ·
+  <a href="#效果演示"><strong>看看效果</strong></a> ·
+  <a href="https://github.com/bigao123456/bigao-shuziren/releases/latest"><strong>下载源码</strong></a> ·
+  <a href="https://github.com/bigao123456/bigao-shuziren/issues"><strong>问题反馈</strong></a>
+</p>
 
-**开始使用：** [中文入门与排错](docs/QUICKSTART.md) · [完整技能说明](SKILL.md) · [项目结构](docs/PROJECT_GUIDE.md) · [制作演示](DEMO.md)
+<p align="center">
+  <a href="https://github.com/bigao123456/bigao-shuziren/actions/workflows/test.yml"><img src="https://github.com/bigao123456/bigao-shuziren/actions/workflows/test.yml/badge.svg" alt="自动测试"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-222222" alt="MIT"></a>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-ff7900" alt="Python 3.10+">
+  <a href="https://github.com/bigao123456/bigao-shuziren/stargazers"><img src="https://img.shields.io/github/stars/bigao123456/bigao-shuziren?style=flat&amp;color=ff7900" alt="Star 收藏"></a>
+</p>
 
-> 这是素材管理、脚本规划、口型任务编排和 FFmpeg 合成工具。真实人物视频、配音和口型模型需自行准备或接入；仓库不附带 Qwen、Duix 或其他模型权重，也未内置这些服务。`passthrough` 与占位动画用于验证剪辑流程，不会生成真实嘴型。
+## 让人物素材成为可复用的内容资产
 
-## 比高版优化
+比高数字人将人物母片拆成有标签的镜头库，按文案和配音规划时间轴，再完成口型任务编排与 FFmpeg 合成。适合知识讲解、课程内容、产品介绍和长期口播创作。
 
-- **运行前可诊断：** `doctor --render --json` 检查 Python、FFmpeg、滤镜、编码器和中文字体；切片依赖可单独检查。
-- **失败不冒充成功：** 未接入的口型引擎返回非零退出码，停止后续合成；真实引擎合成前检查结果文件。
-- **素材合并更可靠：** 重复母片或镜头编号明确报错，避免悄悄覆盖已有素材。
-- **任务更准确：** 可见片段之间的时间空隙单独断开；口型规划复用镜头索引，减少重复构建。
-- **参数与输出更友好：** 检查无效缩放、并发数和成本参数，自动创建导出目录，补充 Windows 中文字体路径。
-- **便于分享使用：** 统一品牌入口、中文入门、项目导览与贡献说明；兼容原有 `python -m istream` 命令。
+| 素材反复用 | 文案带着剪 | 按出镜处理 |
+| :--- | :--- | :--- |
+| 保存人物、景别、动作与表情标签，新内容继续选用。 | 配音锁定时间轴，镜头、字幕与动效跟着内容走。 | 只为人物可见的片段规划口型任务，覆盖画面时跳过。 |
 
-## 无限流怎么玩
+> **使用前了解：** 项目负责素材管理、规划与本地合成。真实人物母片、配音与口型模型需自行准备或接入；内置 `passthrough` 仅作未同步预览，不附带模型权重。
 
-先生成或拍摄一套人物、服装、光线一致的**母片**，切成带动作、表情、景别标签的镜头库。每次写新稿，就按内容选镜头、配音、处理口型，再用不同版式和动效组合成片。
+## 效果演示
 
-适合课程、知识讲解、产品介绍等口播内容。素材库可以持续补新，镜头按使用情况轮换。
+<p align="center">
+  <img src="assets/showcase.gif" alt="同一套人物切片和音轨，组合成六种剪辑风格" width="100%">
+</p>
 
-![制作演示：同一套人物切片和音轨，组合成六种剪辑风格](assets/showcase.gif)
+<p align="center"><sub>同一套人物切片与音轨，可以组合不同的版式和剪辑包装。更多示例与复现说明见 <a href="DEMO.md">制作演示</a>。</sub></p>
 
-上图展示同一套人物切片与音轨的多种包装方式。
+## 从母片到成片
 
-## 核心流程
+| 01 准备素材 | 02 文案规划 | 03 口型与合成 | 04 检查导出 |
+| :--- | :--- | :--- | :--- |
+| 固定人物形象，切片、打标并复核。 | 准备文案和配音，选择镜头、排出时间轴。 | 接入口型结果，叠加字幕、版式与动效。 | 检查嘴型、接缝和遮挡，导出并记录素材使用。 |
 
-| 阶段 | 做什么 |
-| --- | --- |
-| **① 准备母片** | 用参考图固定人物，准备近景、中景、温和手势等镜头，保持脸和嘴无遮挡。 |
-| **② 切片打标** | 按自然停顿和动作切片，标注表情、视线、手势与入出点，筛掉异常片段。 |
-| **③ 文案配音** | 校对配音、对齐台词，以声音锁定时间轴，字幕和镜头跟着声音走。 |
-| **④ 选镜与口型** | 按句挑切片，只给人物可见且需要说话的片段做口型；时序调整先完成。 |
-| **⑤ 多风格剪辑** | 组合全屏、分屏、圆形小窗、补充画面和动态图文，复用切片完成不同包装。 |
-| **⑥ 检查导出** | 核查嘴型、接缝、字幕与遮挡，完整播放后导出横版或竖版，并记录素材使用。 |
-
-## 怎么省成本
-
-- **同稿换风格**：共用母片、配音和已对好的口型，继续剪辑、渲染。
-- **新稿换内容**：母片继续用，重新配音，并处理新稿需要的口型。
-- **按需处理**：人物被全屏图解或补充画面覆盖的时段，跳过口型任务。
-
-“无限流”强调长期复用与重新组合；母片、模型调用及返修仍按实际使用计费。
+同稿换包装可以复用已确认的配音和口型结果；新稿继续使用母片，重新制作配音与所需口型。实际成本取决于素材准备、所用服务和硬件。
 
 ## 快速开始
 
-将本目录放进 Agent 的技能目录，例如项目下的 `.agents/skills/bigao-shuziren/`，加载 [`SKILL.md`](SKILL.md)。提供人物参考图或已有切片库、文案和声音要求，即可让 Agent 按流程制作：
+### 用 Agent 制作
+
+将仓库放入项目的 `.agents/skills/bigao-shuziren/`，让 Agent 加载 [SKILL.md](SKILL.md)，再提供你的人物素材、文案与声音要求：
 
 ```text
 使用 bigao-shuziren。
 优先复用我的人物切片，以确认后的配音锁定时间轴。
-只对需要出镜说话的片段做口型。
-制作一条 16:9 口播，人物主讲、圆形小窗与全屏图解交替。
+制作一条 16:9 口播，只对出镜说话的片段处理口型。
 输出成片、字幕和检查结果。
 ```
 
-本地命令入口：
+### 在本地运行
+
+需要 **Python 3.10+**。以下命令适用于 macOS / Linux；Windows 命令见[中文入门](docs/QUICKSTART.md)。
 
 ```bash
 git clone https://github.com/bigao123456/bigao-shuziren.git
 cd bigao-shuziren
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
 python -m bigao_shuziren doctor
-python -m bigao_shuziren --help
 python -m bigao_shuziren prompts verify
 ```
 
-核心规划模块使用 Python 3.10+；切片需要 NumPy。合成推荐 FFmpeg 7+，须包含 `drawtext`、`subtitles`、`libx264` 和中文字体。macOS 可安装完整版：
+基础规划只用 Python 标准库。切片需要 NumPy，渲染需要带所需滤镜的 FFmpeg 和中文字体。
+
+**下一步：** [安装依赖与排错](docs/QUICKSTART.md#1-准备环境) → [运行规划示例](docs/QUICKSTART.md#2-先验证规划不调用模型) → [渲染预览](docs/QUICKSTART.md#3-验证本地合成) → [换成自己的素材](docs/QUICKSTART.md#4-换成自己的素材)。
+
+## 按需要查文档
+
+| 你想做什么 | 从这里开始 |
+| :--- | :--- |
+| 第一次安装，先跑通一个例子 | [中文入门与常见问题](docs/QUICKSTART.md) |
+| 让 Agent 完整执行制作流程 | [技能说明](SKILL.md) |
+| 为人物准备母片生成提示词 | [提示词生成包](prompts/GENERATE_PACK.md) |
+| 了解标签、数据结构和模块关系 | [素材契约](schema/TAGS.md) · [项目导览](docs/PROJECT_GUIDE.md) · [架构说明](ARCHITECTURE.md) |
+| 查看演示和验证结果 | [制作演示](DEMO.md) · [验证记录](docs/VERIFICATION.md) |
+| 查看更新或参与改进 | [更新记录](CHANGELOG.md) · [贡献指南](CONTRIBUTING.md) |
+
+<details>
+<summary><strong>开发者：目录速览与验证命令</strong></summary>
+
+```text
+bigao_shuziren/  品牌命令入口
+istream/        素材、规划、口型、合成与检查模块
+catalog/        素材标签目录
+prompts/        人物与母片提示词
+recipes/        演示脚本与配方
+docs/           安装、演示与设计文档
+tests/          自动回归测试
+```
 
 ```bash
-brew install ffmpeg-full
-export PATH="$(brew --prefix ffmpeg-full)/bin:$PATH"
 python -m bigao_shuziren doctor --render
-```
-
-视频、配音与真实口型服务需自行接入；包内口型适配器以模板为主，`passthrough` 用于预览，不会修改嘴型。以上环境检查和示例渲染均不调用生成模型。
-
-```bash
-python tools/build_library.py
-python -m istream prompts verify
 python -m unittest discover -s tests -v
-bash tools/run_demo.sh
 ```
 
-提示词源文件已随仓库提供。没有原始母片时，示例使用带标识的占位动画验证装配流程；原有预览和联系表可在 [`DEMO.md`](DEMO.md) 查看。要复现替身母片示例，将自己的两条原片放到 `source/original-koubo.mp4`、`source/ai-native-original.mp4`，重新切片并复核标签。
+兼容原有 `python -m istream` 命令。外部口型引擎适配器主要为模板，接入方式见中文入门。
 
-## 搭配不同剪辑风格
-
-可以参考下面这些独立 Skill 的分镜、版式和动效，再接上同一套人物切片与音轨：
-
-- **`talking-head-editor` · Renoise**：口播精剪、字幕花字、画中画。 [安装 Renoise](https://renoise.ai/mcp?utm_source=lufzzliz-aini-202610&utm_medium=xcom)
-- **[`digital-human-koubo`](https://github.com/andyhuo520/digital-human-koubo) · andyhuo520**：发布解读、粒子文字、文档聚焦。
-
-## 详细文档
-
-| 文档 | 内容 |
-| --- | --- |
-| [`docs/QUICKSTART.md`](docs/QUICKSTART.md) | 从下载到示例规划、渲染与常见问题 |
-| [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md) | 模块结构、输入输出与兼容说明 |
-| [`SKILL.md`](SKILL.md) | 完整流程、命令、剪辑规则与口型处理 |
-| [`prompts/GENERATE_PACK.md`](prompts/GENERATE_PACK.md) | 参考图与母片生成提示词 |
-| [`schema/TAGS.md`](schema/TAGS.md) | 切片标签与素材契约 |
-| [`DEMO.md`](DEMO.md) | 装配、改片与多画幅示例 |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md) | 架构、接口与适配范围 |
-
-## 许可证
-
-项目代码采用 [MIT License](LICENSE)。第三方依赖、外部服务及人物、图片、音视频素材遵循各自的授权和使用条款。
+</details>
 
 ---
 
-**项目维护：** [bigao123456](https://github.com/bigao123456)。开源许可说明见 [NOTICE.md](NOTICE.md)。
+<p align="center">
+  <strong>觉得有用，就留一颗 Star ⭐</strong><br>
+  收藏这个项目，也欢迎把它分享给正在做数字人口播的朋友。
+</p>
 
-如果这个项目对你有帮助，欢迎点击仓库右上角 **Star ⭐** 收藏，也欢迎提交 Issue 或改进建议。分享地址：https://github.com/bigao123456/bigao-shuziren
+<p align="center">
+  <a href="https://github.com/bigao123456">比高 · Bigao</a> ·
+  <a href="https://github.com/bigao123456/bigao-shuziren/issues">反馈问题</a> ·
+  <a href="LICENSE">MIT License</a> ·
+  <a href="NOTICE.md">许可说明</a>
+</p>
