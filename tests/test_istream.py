@@ -224,7 +224,7 @@ class TestRender(unittest.TestCase):
         jp = os.path.join(d, "jobs.json")
         with open(jp, "w", encoding="utf-8") as f:
             json.dump(jobs, f)
-        out = os.path.join(d, "o.mp4")
+        out = os.path.join(d, "exports", "o.mp4")
         r = subprocess.run([sys.executable, "-m", "istream", "render", tp, "--cat", SPEC, "--jobs", jp, "--workdir", os.path.join(d, "b"), "--out", out, "--scale", "0.25"],
                            cwd=ROOT, capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stderr[-800:])
@@ -275,11 +275,13 @@ class TestIdentityFromPhoto(unittest.TestCase):
 
     def _tiny_jpeg(self, path):
         # Minimal JPEG via ffmpeg (available for render tests) or raw PPM→PIL-free ffmpeg
-        r = subprocess.run(
-            ["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x886644:s=64x64", "-frames:v", "1", path],
-            capture_output=True, text=True,
-        )
-        if r.returncode != 0 or not os.path.isfile(path):
+        r = None
+        if shutil.which("ffmpeg"):
+            r = subprocess.run(
+                ["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=0x886644:s=64x64", "-frames:v", "1", path],
+                capture_output=True, text=True,
+            )
+        if r is None or r.returncode != 0 or not os.path.isfile(path):
             # Fallback: write a tiny valid JPEG by bytes (1x1 pixel)
             # JFIF minimal
             jpeg = bytes([
