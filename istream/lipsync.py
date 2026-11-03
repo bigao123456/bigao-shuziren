@@ -96,6 +96,9 @@ def runs(tl):
     for c in tl["host"]:
         vis = c["layout"] != "hidden" and c.get("shot")
         if vis:
+            if cur is not None and abs(c["rec"]["in"] - cur["out"]) > 1e-6:
+                out.append(cur)
+                cur = None
             if cur is None:
                 cur = {"clips": [], "in": c["rec"]["in"]}
             cur["clips"].append(c)
@@ -119,8 +122,12 @@ def tier_of(tl, c, cat, policy):
 
 def make_jobs(tl, cat, policy=None, engine_override=None):
     policy = dict(DEFAULT_POLICY, **(policy or {}))
+    for eng in ([engine_override] if engine_override else [policy[t] for t in ("small", "standard", "hero")]):
+        if eng not in ENGINES:
+            raise ValueError(f"unknown lip-sync engine: {eng}")
     beats = tl.get("beats", [])
     jobs = []
+    cm = {c["id"]: c for c in tl["host"]}
     rank = {"small": 0, "standard": 1, "hero": 2}
     for r in runs(tl):
         # split a run where the tier changes, as long as every piece stays ≥ min_job_s
@@ -151,7 +158,6 @@ def make_jobs(tl, cat, policy=None, engine_override=None):
                 speech_s += o1 - o0
             eng = engine_override or policy[p["tier"]]
             lock = None
-            cm = {c["id"]: c for c in tl["host"]}
             for cid in p["clips"]:
                 sh = cat.shots.get(cm[cid].get("shot") or "", {})
                 if sh and sh.get("lipsync", {}).get("second_face"):
