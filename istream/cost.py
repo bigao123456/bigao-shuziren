@@ -5,6 +5,8 @@ The two levers this skill adds on top of "plates once, mouths each time":
   1. visibility routing — hidden spans (B-roll / cards) are never sent to a lip-sync engine;
   2. size routing — PiP / small faces go to the cheap fast engine, only hero spans pay pro prices.
 """
+import math
+
 from .lipsync import ENGINES
 
 GEN_USD_PER_S = (0.08, 0.14)   # long-duration video models, per generated second
@@ -23,6 +25,9 @@ def plate_capex(catalog_plates):
 
 
 def video_cost(jobs, lifetime_minutes=300.0, capex=(0.0, 0.0)):
+    for label, value in (("lifetime_minutes", lifetime_minutes), ("duration", jobs["duration"])):
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
+            raise ValueError(f"{label} must be a finite positive number")
     lo = hi = 0.0
     rows = []
     for j in jobs["jobs"]:
