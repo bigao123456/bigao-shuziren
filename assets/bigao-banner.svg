@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-labelledby="title desc">
+<title id="title">比高数字人 — 一套母片，持续出片</title>
+<desc id="desc">橙色与深色的比高数字人横幅，展示从素材库到口播时间轴的复用流程。</desc>
+<defs>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity=".035"/></pattern>
+<linearGradient id="warm" x2="1" y2="1"><stop stop-color="#ff890a"/><stop offset="1" stop-color="#ff6800"/></linearGradient>
+</defs>
+<rect width="1280" height="440" rx="20" fill="#141516"/>
+<rect width="1280" height="440" rx="20" fill="url(#grid)"/>
+<path d="M0 432H1280" stroke="#ff7900" stroke-width="16"/>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Noto Sans CJK SC,Microsoft YaHei,sans-serif">
+<rect x="58" y="48" width="44" height="44" rx="12" fill="url(#warm)"/>
+<path d="M71 59V81H82Q91 81 91 75Q91 70 84 70Q90 70 90 65Q90 59 82 59ZM77 64H81Q84 64 84 67Q84 69 81 69H77ZM77 73H82Q85 73 85 76Q85 78 82 78H77Z" fill="white"/>
+<text x="116" y="77" font-size="19" font-weight="700" letter-spacing="3" fill="#ff922d">BIGAO / OPEN SOURCE</text>
+<text x="56" y="194" font-size="76" font-weight="800" fill="#faf8f5" letter-spacing="2">比高数字人</text>
+<text x="60" y="252" font-size="32" font-weight="500" fill="#dedbd6">一套母片，持续出片。</text>
+<text x="60" y="295" font-size="19" fill="#aaa9a7">把人物素材沉淀成库，把每条内容交给工作流。</text>
+<g font-size="15" font-weight="600" fill="#d4d2ce">
+<rect x="60" y="333" width="110" height="34" rx="17" fill="#292725"/><text x="79" y="356">素材复用</text>
+<rect x="181" y="333" width="110" height="34" rx="17" fill="#292725"/><text x="200" y="356">文案驱动</text>
+<rect x="302" y="333" width="126" height="34" rx="17" fill="#292725"/><text x="321" y="356">可见段口型</text>
+</g>
+<g transform="translate(775 80)">
+<rect x="72" width="224" height="155" rx="16" fill="#222322" stroke="#43413e"/>
+<rect x="36" y="24" width="224" height="155" rx="16" fill="#2c2b29" stroke="#56504a"/>
+<rect y="48" width="224" height="155" rx="16" fill="#faf3e8"/>
+<rect x="14" y="62" width="196" height="127" rx="9" fill="#e8d1b5"/>
+<circle cx="110" cy="102" r="24" fill="#b98c61"/>
+<path d="M65 176V157C65 121 157 121 157 157V176" fill="#433c35"/>
+<circle cx="189" cy="80" r="5" fill="#ff7900"/>
+<rect x="112" y="174" width="278" height="110" rx="14" fill="#242525" stroke="#48433d"/>
+<text x="132" y="202" font-size="13" font-weight="700" letter-spacing="2" fill="#d2c9bf">SCRIPT → TIMELINE</text>
+<path d="M132 217H367" stroke="#4e4943"/>
+<rect x="132" y="232" width="68" height="20" rx="4" fill="#ff7900"/>
+<rect x="205" y="232" width="45" height="20" rx="4" fill="#dfbe99"/>
+<rect x="255" y="232" width="63" height="20" rx="4" fill="#ff7900"/>
+<rect x="323" y="232" width="44" height="20" rx="4" fill="#dfbe99"/>
+<path d="M132 265L140 262L146 267L153 260L161 268L169 262L178 266L185 260L194 267L202 261L211 266L218 261L227 269L236 262L244 265L253 260L261 267L270 260L278 266L287 263L295 267L304 261L312 267L321 260L330 267L338 262L347 266L356 261L367 265" fill="none" stroke="#aaa198" stroke-width="2"/>
+<path d="M228 220V277" stroke="#fff3e3" stroke-width="2"/><path d="M222 220H234L228 226Z" fill="#fff3e3"/>
+</g>
+<text x="1217" y="397" text-anchor="end" font-size="12" letter-spacing="2" fill="#8f8a83">REUSE · ASSEMBLE · CREATE</text>
+</g></svg>
