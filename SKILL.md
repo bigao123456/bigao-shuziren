@@ -12,7 +12,7 @@ description: >-
 
 # 比高数字人 · bigao-shuziren
 
-基于 [cclank/lanshu-infinite-stream-koubo](https://github.com/cclank/lanshu-infinite-stream-koubo) 的 MIT 开源改进版，原作者为岚叔。比高版入门见 [docs/QUICKSTART.md](docs/QUICKSTART.md)；新增 `python -m bigao_shuziren doctor --render` 与品牌命令入口，原 `istream` 命令保持兼容。
+采用 MIT 开源许可证。比高版入门见 [docs/QUICKSTART.md](docs/QUICKSTART.md)；新增 `python -m bigao_shuziren doctor --render` 与品牌命令入口，原 `istream` 命令保持兼容。
 
 **一句话：** 主播的“表演”只买一次，之后每条视频只花“嘴”和“剪”的钱；剪辑由脚本驱动、像代码一样可改、每一步都有标签和 QC 兜底。
 
